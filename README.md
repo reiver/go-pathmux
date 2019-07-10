@@ -1,6 +1,6 @@
 # go-pathmux
 
-Package **pathmux** provides a path oriented ("middleware") HTTP handler, which can hand-off to other HTTP handler for each host,
+Package **pathmux** provides a path oriented ("middleware") HTTP handler, which can hand-off to other HTTP handler for each path,
 for the Go programming language's built-in `"net/http"` library.
 
 Package pathmux is a HTTP request router, and dispatcher.
