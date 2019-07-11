@@ -71,7 +71,7 @@ func TestMuxPathHandler(t *testing.T) {
 		}
 
 		for pathNumber, path := range test.Paths {
-			var handler http.Handler = mux.PathHandler(path)
+			var handler http.Handler = mux.Handler(path)
 			if nil == handler {
 				t.Errorf("For test #%d and path #%d, did not expect nil handler, but actually got it: %#v", testNumber, pathNumber, handler)
 				continue
@@ -92,7 +92,7 @@ func TestMuxPathHandler(t *testing.T) {
 		}
 
 		{
-			var handler http.Handler = mux.PathHandler("/does/not/exist")
+			var handler http.Handler = mux.Handler("/does/not/exist")
 			if nil != handler {
 				t.Errorf("For test #%d, expected nil handler, but did not actually get that: %#v", testNumber, handler)
 				continue
@@ -100,7 +100,7 @@ func TestMuxPathHandler(t *testing.T) {
 		}
 
 		{
-			var handler http.Handler = mux.PathHandler("/v3/does-not-exist/a/b/c/d/e/f/g.html")
+			var handler http.Handler = mux.Handler("/v3/does-not-exist/a/b/c/d/e/f/g.html")
 			if nil != handler {
 				t.Errorf("For test #%d, expected nil handler, but did not actually get that: %#v", testNumber, handler)
 				continue

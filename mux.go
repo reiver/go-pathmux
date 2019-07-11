@@ -7,7 +7,8 @@ import (
 	"sync"
 )
 
-// Mux registers (a number of) handlers (i.e., http.Handler) to run (a number of) for a number of paths (which can include patters).
+// Mux registers (a number of) handlers (i.e., http.Handler), and producers (i.e., pathmux.Producer)
+// to handle (a number of) paths, and patterns.
 type Mux struct {
 	mutex sync.RWMutex
 	pathHandlers map[string]http.Handler
@@ -16,5 +17,5 @@ type Mux struct {
 
 type internalPatternHandler struct {
 	Pattern pathmatch.Pattern
-	Handler http.Handler
+	Producer Producer
 }

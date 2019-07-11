@@ -10,20 +10,17 @@ func (receiver *Mux) Handler(path string) http.Handler {
 	var handler http.Handler
 
 	if nil == handler {
-		handler = receiver.PathHandler(path)
+		handler = receiver.pathHandler(path)
 	}
 
 	if nil == handler {
-		handler = receiver.PatternHandler(path)
+		handler = receiver.patternHandler(path)
 	}
 
 	return handler
 }
 
-// PathHandler exists for optimization, and debugging purposes.
-//
-// In most cases you should instead use pathmux.Mux.Handler().
-func (receiver *Mux) PathHandler(path string) http.Handler {
+func (receiver *Mux) pathHandler(path string) http.Handler {
 	if nil == receiver {
 		return nil
 	}
@@ -44,10 +41,7 @@ func (receiver *Mux) PathHandler(path string) http.Handler {
 	return handler
 }
 
-// PatternHandler exists for optimization, and debugging purposes.
-//
-// In most cases you should instead use pathmux.Mux.Handler().
-func (receiver *Mux) PatternHandler(path string) http.Handler {
+func (receiver *Mux) patternHandler(path string) http.Handler {
 	if nil == receiver {
 		return nil
 	}
@@ -57,23 +51,28 @@ func (receiver *Mux) PatternHandler(path string) http.Handler {
 
 	var handler http.Handler
 	for _, patternHandler := range receiver.patternHandlers {
-		matched, err := patternHandler.Pattern.Match(path)
-		if nil != err {
-//@TODO
+		var producer Producer = patternHandler.Producer
+		if nil == producer {
 			continue
+		}
+
+		var matched bool
+		var matches []string
+		{
+			var err error
+
+			matched, err = patternHandler.Pattern.FindAndLoad(path, &matches)
+			if nil != err {
+//@TODO
+				continue
+			}
 		}
 		if !matched {
 			continue
 		}
 
-		handler = patternHandler.Handler
-		if nil == handler {
-			return nil
-		}
+		handler = producer.Produce(matches...)
 		break
-	}
-	if nil == handler {
-		return nil
 	}
 
 	return handler

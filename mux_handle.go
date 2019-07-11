@@ -6,16 +6,19 @@ import (
 	"net/http"
 )
 
+// HandlePattern registers a producer (i.e., pathmux.Producer) that will create
+// handlers (i.e., http.Handler) to handle patterns.
+//
 // Example
 //
-//	err := mux.HandlePath(handler, "/v1/users/{user_id}/wallets/{wallet_name}")
-func (receiver *Mux) HandlePattern(handler http.Handler, pattern string) error {
+//	err := mux.HandlePath(producer, "/v1/users/{user_id}/wallets/{wallet_name}")
+func (receiver *Mux) HandlePattern(producer Producer, pattern string) error {
 	if nil == receiver {
 		return errNilReceiver
 	}
 
-	if nil == handler {
-		return errNilHandler
+	if nil == producer {
+		return errNilProducer
 	}
 
 	var compiledPattern pathmatch.Pattern
@@ -25,7 +28,7 @@ func (receiver *Mux) HandlePattern(handler http.Handler, pattern string) error {
 
 	var patternHandler internalPatternHandler = internalPatternHandler{
 		Pattern: compiledPattern,
-		Handler: handler,
+		Producer: producer,
 	}
 
 	receiver.mutex.Lock()
@@ -36,6 +39,8 @@ func (receiver *Mux) HandlePattern(handler http.Handler, pattern string) error {
 	return nil
 }
 
+// HandlePath registers a handler (i.e., http.Handler) to handle paths.
+//
 // Example
 //
 //	err := mux.HandlePath(handler, "/v1/help")

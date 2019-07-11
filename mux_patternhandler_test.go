@@ -139,18 +139,18 @@ func TestMuxPatternHandler(t *testing.T) {
 		var mux pathmux.Mux
 
 		for patternNumber, pattern := range test.Patterns {
-			var handler http.Handler = nopHandler{
+			var producer pathmux.Producer = nopProducer{
 				Name: pattern,
 			}
 
-			if err := mux.HandlePattern(handler, pattern); nil != err {
+			if err := mux.HandlePattern(producer, pattern); nil != err {
 				t.Errorf("For test #%d and pattern #%d, did not expect an error, but actually got one: (%T) %q", testNumber, patternNumber, err, err)
 				continue
 			}
 		}
 
 		for pathNumber, path := range test.PathMatches {
-			var handler http.Handler = mux.PatternHandler(path)
+			var handler http.Handler = mux.Handler(path)
 			if nil == handler {
 				t.Errorf("For test #%d and matched path #%d, did not expect nil handler, but actually got it: %#v", testNumber, pathNumber, handler)
 				t.Errorf("\tPATH: %q", path)
@@ -166,7 +166,7 @@ func TestMuxPatternHandler(t *testing.T) {
 		}
 
 		for pathNumber, path := range test.PathNoMatches {
-			var handler http.Handler = mux.PatternHandler(path)
+			var handler http.Handler = mux.Handler(path)
 			if nil != handler {
 				t.Errorf("For test #%d and no-match path #%d, expected nil handler, but did not actually get one: %#v", testNumber, pathNumber, handler)
 				t.Errorf("\tPATH: %q", path)

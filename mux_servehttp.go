@@ -4,7 +4,7 @@ import (
 	"net/http"
 )
 
-// ServeHTTP makes &pathmux.Mux fits the http.Handler interface, and makes pathmux.Mux
+// ServeHTTP makes *pathmux.Mux fits the http.Handler interface, and makes pathmux.Mux
 // a type of "middleware".
 func (receiver *Mux) ServeHTTP(responseWriter http.ResponseWriter, request *http.Request) {
 	if nil == receiver {
