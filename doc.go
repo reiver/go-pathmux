@@ -11,9 +11,9 @@ Example
 
 	var mux pathmux.Mux
 	
-	err := mux.HandlePattern(productHandler, "/products/{key}")
-	err := mux.HandlePattern(articleCategoryHandler, "/articles/{category}/")
-	err := mux.HandlePattern(articleHandler, "/articles/{category}/{article_id}")
+	err := mux.HandlePattern(productProducer, "/products/{key}")
+	err := mux.HandlePattern(articleCategoryProducer, "/articles/{category}/")
+	err := mux.HandlePattern(articleProducer, "/articles/{category}/{article_id}")
 	
 	err := mux.HandlePath(productsHandler, "/products")
 	err := mux.HandlePath(articlesHandler, "/articles")
