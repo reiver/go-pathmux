@@ -2,6 +2,8 @@ package pathmux
 
 import (
 	"net/http"
+
+	pkgpath "github.com/reiver/go-path"
 )
 
 // Handler returns the http.Handler that would deal with ‘path’.
@@ -15,6 +17,10 @@ func (receiver *Mux) Handler(path string) http.Handler {
 
 	if nil == handler {
 		handler = receiver.patternHandler(path)
+	}
+
+	if nil == handler {
+		handler = receiver.directoryHandler(path)
 	}
 
 	return handler
@@ -73,6 +79,36 @@ func (receiver *Mux) patternHandler(path string) http.Handler {
 
 		handler = producer.Produce(matches...)
 		break
+	}
+
+	return handler
+}
+
+func (receiver *Mux) directoryHandler(path string) http.Handler {
+	if nil == receiver {
+		return nil
+	}
+
+	path = pkgpath.Canonical("/" + path)
+	path = pkgpath.RemoveTrailingSeparators(path)
+
+	receiver.mutex.RLock()
+	defer receiver.mutex.RUnlock()
+
+	var handler http.Handler
+	for {
+		var found bool
+
+		handler, found = receiver.directoryHandlers[path]
+		if found {
+			break
+		}
+
+		if "/" == path {
+			break
+		}
+		path = pkgpath.Parent(path)
+		path = pkgpath.RemoveTrailingSeparators(path)
 	}
 
 	return handler
