@@ -38,3 +38,14 @@ err := mux.HandlePath(homeHandler, "/")
 
 err := http.ListenAndServe(":8080", mux)
 ```
+
+## Installation
+
+To install package **pathmux** do the following:
+```
+GOPROXY=direct go get https://github.com/reiver/go-pathmux
+```
+
+## Author
+
+Package **pathmux** was written by [Charles Iliya Krempeaux](http://changelog.ca)
