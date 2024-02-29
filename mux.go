@@ -13,6 +13,7 @@ type Mux struct {
 	mutex sync.RWMutex
 	pathHandlers map[string]http.Handler
 	patternHandlers []internalPatternHandler
+	directoryHandlers map[string]http.Handler
 }
 
 type internalPatternHandler struct {
