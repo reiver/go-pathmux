@@ -7,6 +7,10 @@ import (
 // ServeHTTP makes *pathmux.Mux fits the http.Handler interface, and makes pathmux.Mux
 // a type of "middleware".
 func (receiver *Mux) ServeHTTP(responseWriter http.ResponseWriter, request *http.Request) {
+	if nil == responseWriter {
+		return
+	}
+
 	if nil == receiver {
 		http.Error(responseWriter, "Internal Server Error", http.StatusInternalServerError)
 		return
