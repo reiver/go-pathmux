@@ -26,13 +26,16 @@ import "github.com/reiver/go-pathmux"
 
 var mux pathmux.Mux
 
+err := mux.HandlePath(homeHandler, "/")
+err := mux.HandlePath(productsHandler, "/products")
+err := mux.HandlePath(articlesHandler, "/articles")
+
 err := mux.HandlePattern(productProducer, "/products/{key}")
 err := mux.HandlePattern(articleCategoryProducer, "/articles/{category}/")
 err := mux.HandlePattern(articleProducer, "/articles/{category}/{article_id}")
 
-err := mux.HandlePath(productsHandler, "/products")
-err := mux.HandlePath(articlesHandler, "/articles")
-err := mux.HandlePath(homeHandler, "/")
+// handles: "/app", "/app/", "/app/apple", "/app/banana", "/app/banana/", "/app/banana/peel.jpeg",  "/app/cherry", etc.
+err := mux.HandleDirectory(homeHandler, "/app")
 
 // ...
 
