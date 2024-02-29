@@ -5,8 +5,9 @@ import (
 )
 
 var (
-	errFound         = errors.New("pathmux: Found")
-	errNilHandler    = errors.New("pathmux: Nil Handler")
-	errNilProducer   = errors.New("pathmux: Nil Producer")
-	errNilReceiver   = errors.New("pathmux: Nil Receiver")
+	errBadPath       = errors.New("pathmux: bad path")
+	errFound         = errors.New("pathmux: found")
+	errNilHandler    = errors.New("pathmux: nil handler")
+	errNilProducer   = errors.New("pathmux: nil producer")
+	errNilReceiver   = errors.New("pathmux: nil receiver")
 )
