@@ -46,9 +46,9 @@ err := http.ListenAndServe(":8080", mux)
 
 To install package **pathmux** do the following:
 ```
-GOPROXY=direct go get https://github.com/reiver/go-pathmux
+GOPROXY=direct go get github.com/reiver/go-pathmux
 ```
 
 ## Author
 
-Package **pathmux** was written by [Charles Iliya Krempeaux](http://changelog.ca)
+Package **pathmux** was written by [Charles Iliya Krempeaux](http://reiver.link)
