@@ -42,6 +42,14 @@ err := mux.HandleDirectory(homeHandler, "/app")
 err := http.ListenAndServe(":8080", mux)
 ```
 
+## Import
+
+To import package **pathmux** use `import` code like the follownig:
+
+```
+import "github.com/reiver/go-pathmux"
+```
+
 ## Installation
 
 To install package **pathmux** do the following:
