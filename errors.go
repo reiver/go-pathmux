@@ -1,13 +1,13 @@
 package pathmux
 
 import (
-	"errors"
+	"github.com/reiver/go-erorr"
 )
 
-var (
-	errBadPath       = errors.New("pathmux: bad path")
-	errFound         = errors.New("pathmux: found")
-	errNilHandler    = errors.New("pathmux: nil handler")
-	errNilProducer   = errors.New("pathmux: nil producer")
-	errNilReceiver   = errors.New("pathmux: nil receiver")
+const (
+	errBadPath       = erorr.Error("pathmux: bad path")
+	errFound         = erorr.Error("pathmux: found")
+	errNilHandler    = erorr.Error("pathmux: nil handler")
+	errNilProducer   = erorr.Error("pathmux: nil producer")
+	errNilReceiver   = erorr.Error("pathmux: nil receiver")
 )
