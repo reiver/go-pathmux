@@ -7,13 +7,13 @@ import (
 	"github.com/reiver/go-pathmatch"
 )
 
-// HandlePattern registers a producer (i.e., pathmux.Producer) that will create
+// HandlePatternUsingProducer registers a producer (i.e., pathmux.Producer) that will create
 // handlers (i.e., http.Handler) to handle patterns.
 //
 // Example
 //
 //	err := mux.HandlePath(producer, "/v1/users/{user_id}/wallets/{wallet_name}")
-func (receiver *Mux) HandlePattern(producer Producer, pattern string) error {
+func (receiver *Mux) HandlePatternUsingProducer(producer Producer, pattern string) error {
 	if nil == receiver {
 		return errNilReceiver
 	}
@@ -27,7 +27,7 @@ func (receiver *Mux) HandlePattern(producer Producer, pattern string) error {
 		return err
 	}
 
-	var patternHandler internalPatternHandler = internalPatternHandler{
+	var patternHandler internalProducerPatternHandler = internalProducerPatternHandler{
 		Pattern: compiledPattern,
 		Producer: producer,
 	}
@@ -35,7 +35,7 @@ func (receiver *Mux) HandlePattern(producer Producer, pattern string) error {
 	receiver.mutex.Lock()
 	defer receiver.mutex.Unlock()
 
-	receiver.patternHandlers = append(receiver.patternHandlers, patternHandler)
+	receiver.producerPatternHandlers = append(receiver.producerPatternHandlers, patternHandler)
 
 	return nil
 }

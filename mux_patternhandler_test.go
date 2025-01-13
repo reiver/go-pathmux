@@ -143,7 +143,7 @@ func TestMuxPatternHandler(t *testing.T) {
 				Name: pattern,
 			}
 
-			if err := mux.HandlePattern(producer, pattern); nil != err {
+			if err := mux.HandlePatternUsingProducer(producer, pattern); nil != err {
 				t.Errorf("For test #%d and pattern #%d, did not expect an error, but actually got one: (%T) %q", testNumber, patternNumber, err, err)
 				continue
 			}

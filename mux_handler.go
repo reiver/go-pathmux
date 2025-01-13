@@ -56,7 +56,7 @@ func (receiver *Mux) patternHandler(path string) http.Handler {
 	defer receiver.mutex.RUnlock()
 
 	var handler http.Handler
-	for _, patternHandler := range receiver.patternHandlers {
+	for _, patternHandler := range receiver.producerPatternHandlers {
 		var producer Producer = patternHandler.Producer
 		if nil == producer {
 			continue

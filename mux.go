@@ -12,11 +12,11 @@ import (
 type Mux struct {
 	mutex sync.RWMutex
 	pathHandlers map[string]http.Handler
-	patternHandlers []internalPatternHandler
+	producerPatternHandlers []internalProducerPatternHandler
 	directoryHandlers map[string]http.Handler
 }
 
-type internalPatternHandler struct {
+type internalProducerPatternHandler struct {
 	Pattern pathmatch.Pattern
 	Producer Producer
 }
