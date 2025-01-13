@@ -1,6 +1,6 @@
 # go-pathmux
 
-Package **pathmux** provides a path oriented ("middleware") HTTP handler, which can hand-off to other HTTP handler for each path,
+Package **pathmux** provides a path oriented route ("middleware") HTTP handler, which can hand-off to other HTTP handler for each path,
 for the Go programming language's built-in `"net/http"` library.
 
 Package pathmux is a HTTP request router, and dispatcher.
@@ -30,9 +30,9 @@ err := mux.HandlePath(homeHandler, "/")
 err := mux.HandlePath(productsHandler, "/products")
 err := mux.HandlePath(articlesHandler, "/articles")
 
-err := mux.HandlePattern(productProducer, "/products/{key}")
-err := mux.HandlePattern(articleCategoryProducer, "/articles/{category}/")
-err := mux.HandlePattern(articleProducer, "/articles/{category}/{article_id}")
+err := mux.HandlePattern(productPatternHandler, "/products/{key}")
+err := mux.HandlePattern(articleCategoryPatternHandler, "/articles/{category}/")
+err := mux.HandlePattern(articlePatternHandler, "/articles/{category}/{article_id}")
 
 // handles: "/app", "/app/", "/app/apple", "/app/banana", "/app/banana/", "/app/banana/peel.jpeg",  "/app/cherry", etc.
 err := mux.HandleDirectory(homeHandler, "/app")
