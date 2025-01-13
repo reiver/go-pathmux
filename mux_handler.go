@@ -20,6 +20,10 @@ func (receiver *Mux) Handler(path string) http.Handler {
 	}
 
 	if nil == handler {
+		handler = receiver.patternHandlerUsingProducer(path)
+	}
+
+	if nil == handler {
 		handler = receiver.directoryHandler(path)
 	}
 
@@ -48,6 +52,38 @@ func (receiver *Mux) pathHandler(path string) http.Handler {
 }
 
 func (receiver *Mux) patternHandler(path string) http.Handler {
+	if nil == receiver {
+		return nil
+	}
+
+	receiver.mutex.RLock()
+	defer receiver.mutex.RUnlock()
+
+	var handler http.Handler
+	for _, patternHandler := range receiver.patternHandlers {
+		var matched bool
+		var matches []string
+		{
+			var err error
+
+			matched, err = patternHandler.Pattern.FindAndLoad(path, &matches)
+			if nil != err {
+//@TODO
+				continue
+			}
+		}
+		if !matched {
+			continue
+		}
+
+		handler = patternHandler.HTTPHandler(patternHandler.Pattern.MatchNames(), matches)
+		break
+	}
+
+	return handler
+}
+
+func (receiver *Mux) patternHandlerUsingProducer(path string) http.Handler {
 	if nil == receiver {
 		return nil
 	}
