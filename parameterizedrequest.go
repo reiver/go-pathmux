@@ -5,9 +5,34 @@ import (
 )
 
 type ParameterizedRequest struct {
-	httpRequest *http.Request
-	parameterNames[]string
-	parameters []string
+	httpRequest    *http.Request
+	parameterNames []string
+	parameters     []string
+}
+
+// ParameterizedRequest appends a parameter inside of a [ParameterizedRequest],
+// and appends the index of the new parameter.
+//
+// The name passed to AppendParameter is the same name passed to [ParameterByName].
+// The index returned by AppendParameter is the same index passed to [ParameterByIndex].
+//
+// You would probably only use this if you are writing a tests.
+func (receiver *ParameterizedRequest) AppendParameter(name string, value string) int {
+	if nil == receiver {
+		panic(errNilReceiver)
+	}
+
+	if nil == receiver.parameterNames {
+		receiver.parameterNames = []string{}
+	}
+	if nil == receiver.parameters {
+		receiver.parameters = []string{}
+	}
+
+	receiver.parameterNames = append(receiver.parameterNames, name)
+	receiver.parameters     = append(receiver.parameters, value)
+
+	return len(receiver.parameters) - 1
 }
 
 // HTTPRequest returns the internal [http.Request] that [ParameterizedRequest] wraps.
