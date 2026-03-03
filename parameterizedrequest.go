@@ -10,6 +10,7 @@ type ParameterizedRequest struct {
 	parameters []string
 }
 
+// HTTPRequest returns the internal [http.Request] that [ParameterizedRequest] wraps.
 func (receiver ParameterizedRequest) HTTPRequest() *http.Request {
 	return receiver.httpRequest
 }
