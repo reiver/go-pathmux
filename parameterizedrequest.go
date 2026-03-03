@@ -14,6 +14,17 @@ func (receiver ParameterizedRequest) HTTPRequest() *http.Request {
 	return receiver.httpRequest
 }
 
+// SetHTTPRequest sets the [http.Request] that is inside of a [ParameterizedRequest].
+//
+// You would probably only use this if you are writing a tests.
+func (receiver *ParameterizedRequest) SetHTTPRequest(req *http.Request) {
+	if nil == receiver {
+		panic(errNilReceiver)
+	}
+
+	receiver.httpRequest = req
+}
+
 func (receiver ParameterizedRequest) ParameterByIndex(index int) (string, bool) {
 	if index < 0 {
 		var nada string
