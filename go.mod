@@ -5,5 +5,5 @@ go 1.23
 require (
 	github.com/reiver/go-erorr v0.0.0-20240801233437-8cbde6d1fa3f
 	github.com/reiver/go-path v0.0.0-20240327181650-5f2ee05890d8
-	github.com/reiver/go-pathmatch v1.0.1-0.20240802004530-0dc31d85afa8
+	github.com/reiver/go-pathmatch v1.0.1-0.20260509163449-33f0bcfaa1d3
 )
