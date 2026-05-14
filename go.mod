@@ -5,7 +5,7 @@ go 1.24.3
 require (
 	codeberg.org/reiver/go-erorr v0.0.0-20260509033006-5ff6fb3009f8
 	github.com/reiver/go-path v0.0.0-20240327181650-5f2ee05890d8
-	github.com/reiver/go-pathmatch v1.0.1-0.20260509163449-33f0bcfaa1d3
+	github.com/reiver/go-pathmatch v1.0.1-0.20260514023412-3be60bdf9f73
 )
 
 require (
